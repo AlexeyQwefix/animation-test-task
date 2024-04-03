@@ -39,6 +39,10 @@
     border-radius: 1vw;
     font-size: 2vw;
     color: white;
+    &:disabled{
+      background-color: gray;
+      cursor: default;
+    }
   }
   .ball{
     height: 10vw;

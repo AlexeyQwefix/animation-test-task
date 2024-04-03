@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import s from "./style.module.scss";
 
-const THROW_BALL_TIME = 3000;
+const THROW_BALL_TIME = 2000;
 const FPS = 5;
 
 function App() {
@@ -25,8 +25,8 @@ function App() {
     }, FPS / 1000);
 
     setTimeout(() => {
-      clearInterval(interval)
-      setProgress(null)
+      clearInterval(interval);
+      setProgress(null);
     }, THROW_BALL_TIME);
   };
 
@@ -53,13 +53,15 @@ function App() {
                   progress
             ),
           }}
-        >
-          
-        </div>
+        ></div>
       )}
 
-      <button onClick={throwBall} className={s.startButton}>
-        START
+      <button
+        disabled={!!progress}
+        onClick={throwBall}
+        className={s.startButton}
+      >
+        START {progress && Math.round((THROW_BALL_TIME - THROW_BALL_TIME*progress)/1000)}
       </button>
     </div>
   );
