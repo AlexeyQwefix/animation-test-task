@@ -1,8 +1,12 @@
 import { useRef, useState } from "react";
+import Ball from "../Ball";
+import MovingBlock from "../MovingBlock";
+import StartButton from "../StartButton";
+import StaticBlock from "../StaticBlock";
 import s from "./style.module.scss";
 
 const THROW_BALL_TIME = 2000;
-const FPS = 5;
+const FPS = 144;
 
 function App() {
   const movingBlock = useRef<HTMLDivElement>(null);
@@ -22,7 +26,7 @@ function App() {
 
     const interval = setInterval(() => {
       setProgress((new Date().getTime() - startTime) / THROW_BALL_TIME);
-    }, FPS / 1000);
+    }, 1000 / FPS);
 
     setTimeout(() => {
       clearInterval(interval);
@@ -32,37 +36,18 @@ function App() {
 
   return (
     <div className={s.app}>
-      <div ref={movingBlock} className={`${s.block} ${s.movingBlock}`}>
-        1
-      </div>
-      <div ref={staticBlock} className={`${s.block} ${s.staticBlock}`}>
-        2
-      </div>
-      {startPoint && staticBlock.current && progress && (
-        <div
-          className={s.ball}
-          style={{
-            left: Math.round(
-              startPoint.x +
-                (staticBlock.current.getBoundingClientRect().x - startPoint.x) *
-                  progress
-            ),
-            top: Math.round(
-              startPoint.y +
-                (staticBlock.current.getBoundingClientRect().y - startPoint.y) *
-                  progress
-            ),
-          }}
-        ></div>
-      )}
-
-      <button
-        disabled={!!progress}
-        onClick={throwBall}
-        className={s.startButton}
-      >
-        START {progress && Math.round((THROW_BALL_TIME - THROW_BALL_TIME*progress)/1000)}
-      </button>
+      <MovingBlock refToDiv={movingBlock} />
+      <StaticBlock refToDiv={staticBlock} />
+      <Ball
+        progress={progress}
+        startPoint={startPoint}
+        staticBlock={staticBlock}
+      />
+      <StartButton
+        throwBall={throwBall}
+        progress={progress}
+        throwBallTime={THROW_BALL_TIME}
+      />
     </div>
   );
 }

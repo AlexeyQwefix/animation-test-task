@@ -1,0 +1,14 @@
+.block {
+  height: 10vw;
+  width: 10vw;
+  position: absolute;
+  background-color: blue;
+  color: white;
+  font-weight: 800;
+  font-size: 3vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 5vw;
+  top: calc(50vh - 2.5vw);
+}
